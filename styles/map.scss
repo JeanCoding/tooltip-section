@@ -1,190 +1,149 @@
-@use 'sass:map';
+@use "sass:map";
 
 .map-section {
+  position: relative;
 
- 	position: relative;
-
-	.map-image-large {
-
+  .map-image-large {
     width: 100%;
-		background-repeat: no-repeat;
+    background-repeat: no-repeat;
 
-		@include breakpoint(medium down) {
+    @include breakpoint(medium down) {
+      display: none;
+    }
+  }
 
-			display: none;
+  .map-image-small {
+    @include breakpoint(medium-large) {
+      display: none;
+    }
+  }
 
-		}
-	}
+  img {
+    width: 100%;
+  }
 
-	.map-image-small {
+  .location {
+    position: absolute;
+    background-color: $color-tooltip-background;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.32);
+    content: "";
+    cursor: pointer;
 
-		@include breakpoint(medium-large) {
+    @include hover {
+      @include hover-transition-settings;
 
-			display: none;
+      transform: scale(1.2);
+    }
 
-		}
-	}
+    &:focus {
+      transform: scale(1.2);
+    }
+  }
 
-	img {
+  .mobile {
+    @include breakpoint(medium) {
+      display: none;
+    }
+  }
 
-		width: 100%;
+  .desktop {
+    @include breakpoint(small down) {
+      display: none;
+    }
+  }
 
-	}
+  .tooltip {
+    display: none;
+  }
 
-	.location {
-
-		position: absolute;
-		background-color: $color-tooltip-background;
-		width: 25px;
-		height: 25px;
-		border-radius: 100%;
-		box-shadow: 0 2px 20px 0 rgba(0,0,0,0.32);
-		content: "";
-		cursor: pointer;
-
-		@include hover {
-
-			@include hover-transition-settings;
-
-  		transform: scale(1.2);
-
-		}
-
-		&:focus {
-
-  		transform: scale(1.2);
-
-		}
-
-	}
-
-	.mobile {
-
-		@include breakpoint(medium) {
-
-			display: none;
-
-		}
-	}
-
-	.desktop {
-
-		@include breakpoint(small down) {
-
-			display: none;
-
-		}
-	}
-
-	.tooltip {
-
-		display: none;
-
-	}
-
-	.tooltip-container {
-
-		position: absolute;
+  .tooltip-container {
+    position: absolute;
     bottom: 0;
     width: 100%;
 
-		[data-tippy-root] {
+    [data-tippy-root] {
+      @include breakpoint(small down) {
+        @include xy-cell(12);
+        width: calc(
+          100% - #{$grid-margin-gutters} - #{map.get(
+              $grid-container-padding,
+              "small"
+            )}
+        );
+        position: absolute !important;
+        inset: unset unset 32px unset !important;
+        transform: none !important;
 
-			@include breakpoint(small down) {
+        // @include xy-cell($size: 12, $gutters:0);
+      }
 
-				@include xy-cell(12);
-				width: calc(100% - #{$grid-margin-gutters} - #{map.get($grid-container-padding, 'small')});
-				position: absolute !important;
-				inset: unset unset 32px unset !important;
-				transform: none !important;
+      .tippy-box[data-theme^="map"] {
+        flex-direction: column;
+        padding: 32px 96px 16px 24px;
+        border-radius: 7px;
+        box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.19);
+        background-color: $color-tooltip-background;
+        color: black;
+        max-width: 100% !important;
+        margin-left: 16px;
 
-				// @include xy-cell($size: 12, $gutters:0);
+        @include breakpoint(small down) {
+          padding: 32px 24px 16px 24px;
+          margin-left: 0px;
+        }
 
-			}
+        &[data-theme="map-mobile"] {
+          display: flex;
+          transform: none;
+          bottom: 0;
 
-			.tippy-box[data-theme^='map'] {
+          @include breakpoint(medium) {
+            display: none;
+          }
+        }
 
-				flex-direction: column;
-				padding: 32px 96px 16px 24px; 
-				border-radius: 7px;
-				box-shadow: 0 16px 32px -10px rgba(0,0,0,0.19);
-				background-color: $color-tooltip-background;
-				color: black;
-		    max-width: 100% !important;
-		    margin-left: 16px;
+        &[data-theme="map-desktop"] {
+          display: none;
 
-		    @include breakpoint (small down) {
+          @include breakpoint(medium) {
+            display: flex;
+          }
+        }
 
-					padding: 32px 24px 16px 24px; 
-		    	margin-left: 0px;
+        .tippy-arrow {
+          color: $color-tooltip-background;
 
-		    }
+          @include breakpoint(medium down) {
+            display: none;
+          }
+        }
 
-				&[data-theme='map-mobile'] {
+        .tooltip-heading {
+          display: flex;
+          margin-bottom: 32px;
 
-					display: flex;
-					transform: none;
-					bottom: 0;
+          img {
+            width: 30px;
+            height: auto;
+          }
 
-					@include breakpoint(medium) {
-						
-						display: none;
+          .tooltip-title {
+            margin-left: 16px;
+            font-weight: 600;
+            font-size: 26px;
+          }
+        }
 
-					}
-				}
+        .tooltip-intro {
+          @include paragraph-short;
 
-				&[data-theme='map-desktop'] {
-					
-					display: none;
-
-					@include breakpoint(medium) {
-						
-						display: flex;
-
-					}
-				}
-
-				.tippy-arrow {
-
-					color: $color-tooltip-background;
-
-					@include breakpoint(medium down) {
-
-						display: none;
-
-					}
-				}
-
-				.tooltip-heading {
-
-					display: flex;
-					margin-bottom: 32px;
-
-					img {
-
-						width: 30px;
-						height: auto;
-
-					}
-
-					.tooltip-title {
-
-						margin-left: 16px;
-						font-weight: 600;
-						font-size: 26px;
-
-					}
-				}
-
-				.tooltip-intro {
-
-					@include paragraph-short;
-
-					font-weight: 400;
-					margin-top: 32px;
-
-				}
-			}
-		}
-	}
+          font-weight: 400;
+          margin-top: 32px;
+        }
+      }
+    }
+  }
 }
