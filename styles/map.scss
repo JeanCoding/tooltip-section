@@ -67,6 +67,7 @@
     [data-tippy-root] {
       @include breakpoint(small down) {
         @include xy-cell(12);
+        
         width: calc(
           100% - #{$grid-margin-gutters} - #{map.get(
               $grid-container-padding,
