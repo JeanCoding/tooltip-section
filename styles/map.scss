@@ -67,7 +67,6 @@
     [data-tippy-root] {
       @include breakpoint(small down) {
         @include xy-cell(12);
-        
         width: calc(
           100% - #{$grid-margin-gutters} - #{map.get(
               $grid-container-padding,
@@ -77,7 +76,6 @@
         position: absolute !important;
         inset: unset unset 32px unset !important;
         transform: none !important;
-
       }
 
       .tippy-box[data-theme^="map"] {
@@ -124,10 +122,11 @@
         .tooltip-heading {
           display: flex;
           margin-bottom: 32px;
+          align-items: center;
 
           img {
-            width: 30px;
-            height: auto;
+            width: auto;
+            height: 37px;
           }
 
           .tooltip-title {
